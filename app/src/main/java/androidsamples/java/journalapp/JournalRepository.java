@@ -20,8 +20,8 @@ public class JournalRepository {
 
     private JournalRepository(Context context) {
         JournalRoomDatabase db = Room.databaseBuilder(context.getApplicationContext(),
-                                    JournalRoomDatabase.class,
-                                    DATABASE_NAME).build();
+                JournalRoomDatabase.class,
+                DATABASE_NAME).build();
         mJournalEntryDao = db.journalEntryDao();
     }
 
@@ -31,7 +31,7 @@ public class JournalRepository {
     }
 
 
-    private static JournalRepository getInstance() {
+    public static JournalRepository getInstance() {
         if(sInstance == null)
             throw new IllegalStateException("Repo. must be initialized");
         return sInstance;
