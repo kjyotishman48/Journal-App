@@ -25,7 +25,7 @@ public class JournalRepository {
         mJournalEntryDao = db.journalEntryDao();
     }
 
-    private static void init(Context context) {
+    public static void init(Context context) {
         if(sInstance == null)
             sInstance = new JournalRepository(context);
     }
