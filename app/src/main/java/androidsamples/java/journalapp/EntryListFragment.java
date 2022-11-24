@@ -76,6 +76,21 @@ public class EntryListFragment extends Fragment {
     return view;
   }
 
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.fragment_entry_list, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == R.id.menu_info_entry) {
+      NavDirections action = EntryListFragmentDirections.actionEntryListFragmentToInfoFragment();
+      Navigation.findNavController(view).navigate(action);
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
   private class EntryViewHolder extends RecyclerView.ViewHolder {
     private final TextView mTxtTitle;
     private final TextView mTxtDate;
@@ -119,21 +134,6 @@ public class EntryListFragment extends Fragment {
       action.setEntryId(mEntry.getUid().toString());
       Navigation.findNavController(view).navigate(action);
     }
-  }
-
-  @Override
-  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-    super.onCreateOptionsMenu(menu, inflater);
-    inflater.inflate(R.menu.fragment_entry_list, menu);
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    if (item.getItemId() == R.id.menu_info_entry) {
-      NavDirections action = EntryListFragmentDirections.actionEntryListFragmentToInfoFragment();
-      Navigation.findNavController(view).navigate(action);
-    }
-    return super.onOptionsItemSelected(item);
   }
 
   /*
