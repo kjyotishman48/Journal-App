@@ -39,43 +39,43 @@ public class JournalEntry {
     //Getters and Setters
 
     @NotNull
-    public UUID getmUid() {
+    public UUID getUid() {
         return mUid;
     }
 
-    public void setmUid(@NotNull UUID mUid) {
+    public void setUid(@NotNull UUID mUid) {
         this.mUid = mUid;
     }
 
-    public String getmTitle() {
+    public String title() {
         return mTitle;
     }
 
-    public void setmTitle(String mTitle) {
+    public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
 
-    public String getmDate() {
+    public String date() {
         return mDate;
     }
 
-    public void setmDate(String mDate) {
+    public void setDate(String mDate) {
         this.mDate = mDate;
     }
 
-    public String getmStartTime() {
+    public String getStartTime() {
         return mStartTime;
     }
 
-    public void setmStartTime(String mStartTime) {
+    public void setStartTime(String mStartTime) {
         this.mStartTime = mStartTime;
     }
 
-    public String getmEndTime() {
+    public String getEndTime() {
         return mEndTime;
     }
 
-    public void setmEndTime(String mEndTime) {
+    public void setEndTime(String mEndTime) {
         this.mEndTime = mEndTime;
     }
 }

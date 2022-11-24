@@ -59,7 +59,7 @@ public class EntryListFragment extends Fragment {
       JournalEntry entry = new JournalEntry("", "", "","");
       mEntryListViewModel.insert(entry);
       EntryListFragmentDirections.AddEntryAction action = EntryListFragmentDirections.addEntryAction();
-      action.setEntryId(entry.getmUid().toString());
+      action.setEntryId(entry.getUid().toString());
       Navigation.findNavController(view).navigate(action);
     });
     //--------------------------------------------------------------------------------------------------
@@ -101,10 +101,10 @@ public class EntryListFragment extends Fragment {
 
     void bind(JournalEntry entry) {
       mEntry = entry;
-      this.mTxtTitle.setText(mEntry.getmTitle().isEmpty()?"Title":mEntry.getmTitle());
-      this.mTxtDate.setText(mEntry.getmDate().isEmpty()?"Date":mEntry.getmDate());
-      this.mTxtStartTime.setText(mEntry.getmStartTime().isEmpty()?"Start Time":mEntry.getmStartTime());
-      this.mTxtEndTime.setText(mEntry.getmEndTime().isEmpty()?"End Time":mEntry.getmEndTime());
+      this.mTxtTitle.setText(mEntry.title().isEmpty()?"Title":mEntry.title());
+      this.mTxtDate.setText(mEntry.date().isEmpty()?"Date":mEntry.date());
+      this.mTxtStartTime.setText(mEntry.getStartTime().isEmpty()?"Start Time":mEntry.getStartTime());
+      this.mTxtEndTime.setText(mEntry.getEndTime().isEmpty()?"End Time":mEntry.getEndTime());
     }
 
     //---------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ public class EntryListFragment extends Fragment {
        * call setEntryId on action since we are passing UUID of the entry as a argument
        */
       EntryListFragmentDirections.AddEntryAction action = EntryListFragmentDirections.addEntryAction();
-      action.setEntryId(mEntry.getmUid().toString());
+      action.setEntryId(mEntry.getUid().toString());
       Navigation.findNavController(view).navigate(action);
     }
   }
