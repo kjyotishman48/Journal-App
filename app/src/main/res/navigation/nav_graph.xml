@@ -13,6 +13,9 @@
     <action
         android:id="@+id/addEntryAction"
         app:destination="@id/entryDetailsFragment" />
+    <action
+        android:id="@+id/action_entryListFragment_to_infoFragment"
+        app:destination="@id/infoFragment" />
   </fragment>
   <fragment
       android:id="@+id/entryDetailsFragment"
@@ -50,4 +53,9 @@
   <dialog
       android:id="@+id/timePickerDialog"
       android:name="androidsamples.java.journalapp.TimePickerFragment" />
+  <fragment
+      android:id="@+id/infoFragment"
+      android:name="androidsamples.java.journalapp.InfoFragment"
+      android:label="fragment_info"
+      tools:layout="@layout/fragment_info" />
 </navigation>

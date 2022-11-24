@@ -42,6 +42,7 @@ public class EntryListFragment extends Fragment {
     //Inside onCreate we load the view model
     super.onCreate(savedInstanceState);
     mEntryListViewModel = new ViewModelProvider(this).get(EntryListViewModel.class);
+    setHasOptionsMenu(true);
   }
 
   @Override
@@ -118,6 +119,21 @@ public class EntryListFragment extends Fragment {
       action.setEntryId(mEntry.getUid().toString());
       Navigation.findNavController(view).navigate(action);
     }
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.fragment_entry_list, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == R.id.menu_info_entry) {
+      NavDirections action = EntryListFragmentDirections.actionEntryListFragmentToInfoFragment();
+      Navigation.findNavController(view).navigate(action);
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   /*
