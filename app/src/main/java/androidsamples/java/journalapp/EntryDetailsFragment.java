@@ -67,11 +67,6 @@ public class EntryDetailsFragment extends Fragment {
 //    OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
 //      @Override
 //      public void handleOnBackPressed() {
-//        mEntry.setTitle(mTitle.getText().toString());
-//        mEntry.setDate(mBtnDate.getText().toString());
-//        mEntry.setStartTime(mBtnStart.getText().toString());
-//        mEntry.setEndTime(mBtnEnd.getText().toString());
-//        mEntryDetailsViewModel.saveEntry(mEntry);
 //        mEntryDetailsViewModel.deleteEntry(mEntry);
 //        // Handle the back button event
 //      }
@@ -90,11 +85,9 @@ public class EntryDetailsFragment extends Fragment {
     mBtnStart = view.findViewById(R.id.btn_start_time);
     mBtnEnd = view.findViewById(R.id.btn_end_time);
     view.findViewById(R.id.btn_save).setOnClickListener(this::saveEntry);
-
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       view.findViewById(R.id.btn_entry_date).setOnClickListener(this::launchDateDialog);
     }
-
     view.findViewById(R.id.btn_start_time).setOnClickListener(this::launchStartTimerDialog);
     view.findViewById(R.id.btn_end_time).setOnClickListener(this::launchEndTimerDialog);
     return view;
@@ -118,13 +111,21 @@ public class EntryDetailsFragment extends Fragment {
   }
 
   private void saveEntry(View v) {
-    mEntry.setTitle(mTitle.getText().toString());
-    mEntry.setDate(mBtnDate.getText().toString());
-    mEntry.setStartTime(mBtnStart.getText().toString());
-    mEntry.setEndTime(mBtnEnd.getText().toString());
-    mEntryDetailsViewModel.saveEntry(mEntry);
-
-    getActivity().onBackPressed();
+    boolean goBack = true;
+    if(mTitle.getText().toString().isEmpty()) {
+      goBack = false;
+      Toast.makeText(getActivity(), "Title Cannot be empty", Toast.LENGTH_SHORT).show();
+    }
+    else {
+      mEntry.setTitle(mTitle.getText().toString());
+      mEntry.setDate(mBtnDate.getText().toString());
+      mEntry.setStartTime(mBtnStart.getText().toString());
+      mEntry.setEndTime(mBtnEnd.getText().toString());
+      mEntryDetailsViewModel.saveEntry(mEntry);
+    }
+    if(goBack) {
+      getActivity().onBackPressed();
+    }
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
@@ -210,6 +211,17 @@ public class EntryDetailsFragment extends Fragment {
                 getActivity().onBackPressed();
               })
               .setNegativeButton(R.string.cancel, null).show();
+    }
+    else if (item.getItemId() == R.id.menu_share_entry) {
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      String message = "Look what I have been up to: "+ mEntry.title() + " on " +
+              mEntry.date() + ", " + mEntry.getStartTime() + " to " + mEntry.getEndTime();
+      sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+      sendIntent.setType("text/plain");
+
+      Intent shareIntent = Intent.createChooser(sendIntent, null);
+      startActivity(shareIntent);
     }
     return super.onOptionsItemSelected(item);
   }
