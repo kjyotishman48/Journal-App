@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -61,6 +62,22 @@ public class EntryDetailsFragment extends Fragment {
       Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
       getActivity().onBackPressed();
     }
+
+    // This callback will only be called when MyFragment is at least Started.
+//    OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+//      @Override
+//      public void handleOnBackPressed() {
+//        mEntry.setTitle(mTitle.getText().toString());
+//        mEntry.setDate(mBtnDate.getText().toString());
+//        mEntry.setStartTime(mBtnStart.getText().toString());
+//        mEntry.setEndTime(mBtnEnd.getText().toString());
+//        mEntryDetailsViewModel.saveEntry(mEntry);
+//        mEntryDetailsViewModel.deleteEntry(mEntry);
+//        // Handle the back button event
+//      }
+//    };
+//    requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
   }
 
 
@@ -174,4 +191,28 @@ public class EntryDetailsFragment extends Fragment {
     String dateToDisplay = formatter.format(d);
     mBtnDate.setText(dateToDisplay);
   }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.fragment_entry_details, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == R.id.menu_delete_entry) {
+      new AlertDialog.Builder(getContext())
+              .setTitle("Delete Entry")
+              .setMessage("Do you really want to delete this entry?")
+              .setIcon(android.R.drawable.ic_delete)
+              .setPositiveButton(R.string.yes, (dialog, id) -> {
+                mEntryDetailsViewModel.deleteEntry(mEntry);
+                getActivity().onBackPressed();
+              })
+              .setNegativeButton(R.string.cancel, null).show();
+    }
+    return super.onOptionsItemSelected(item);
+  }
+
+
 }
