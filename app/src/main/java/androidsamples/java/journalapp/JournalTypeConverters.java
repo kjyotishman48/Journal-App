@@ -1,18 +1,18 @@
 package androidsamples.java.journalapp;
 
-import androidx.room.TypeConverters;
+import androidx.room.TypeConverter;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 public class JournalTypeConverters {
-    @TypeConverters
+    @TypeConverter
     public UUID toUUID(@NotNull String uuid) {
         return UUID.fromString(uuid);
     }
 
-    @TypeConverters
+    @TypeConverter
     public String fromUUID(@NotNull UUID uuid) {
         return uuid.toString();
     }

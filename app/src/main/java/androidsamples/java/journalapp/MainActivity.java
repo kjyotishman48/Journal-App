@@ -1,8 +1,6 @@
 package androidsamples.java.journalapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
 
