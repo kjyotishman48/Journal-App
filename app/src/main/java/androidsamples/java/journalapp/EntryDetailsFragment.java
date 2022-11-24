@@ -47,6 +47,9 @@ public class EntryDetailsFragment extends Fragment {
   private Button mBtnDate, mBtnStart, mBtnEnd;
   private EntryDetailsViewModel mEntryDetailsViewModel;
   private JournalEntry mEntry;
+  private UUID mEntryId;
+  private String entryId;
+  private boolean newEntry;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,23 +59,21 @@ public class EntryDetailsFragment extends Fragment {
     mEntryDetailsViewModel = new ViewModelProvider(getActivity()).get(EntryDetailsViewModel.class);
 
     try {
-      UUID mEntryId = UUID.fromString(EntryDetailsFragmentArgs.fromBundle(getArguments()).getEntryId());
-      mEntryDetailsViewModel.loadEntry(mEntryId);
+      entryId = EntryDetailsFragmentArgs.fromBundle(getArguments()).getEntryId();
+      if(entryId != "NEW_ENTRY") {
+        newEntry = false;
+        mEntryId = UUID.fromString(EntryDetailsFragmentArgs.fromBundle(getArguments()).getEntryId());
+        mEntryDetailsViewModel.loadEntry(mEntryId);
+      }
+      else {
+        newEntry = true;
+        mEntry = new JournalEntry("","","","");
+      }
     }catch (IllegalArgumentException e){
       Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+      mEntryDetailsViewModel.deleteEntry(mEntry);
       getActivity().onBackPressed();
     }
-
-    // This callback will only be called when MyFragment is at least Started.
-//    OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-//      @Override
-//      public void handleOnBackPressed() {
-//        mEntryDetailsViewModel.deleteEntry(mEntry);
-//        // Handle the back button event
-//      }
-//    };
-//    requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-
   }
 
 
@@ -96,11 +97,16 @@ public class EntryDetailsFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    mEntryDetailsViewModel.getEntryLiveData().observe(getActivity(),
-            entry -> {
-              this.mEntry = entry;
-              if (entry != null) updateUI();
-            });
+    if(newEntry) {
+      updateUI();
+    }
+    else {
+      mEntryDetailsViewModel.getEntryLiveData().observe(getActivity(),
+              entry -> {
+                this.mEntry = entry;
+                if (entry != null) updateUI();
+              });
+    }
   }
 
   private void updateUI() {
@@ -116,6 +122,18 @@ public class EntryDetailsFragment extends Fragment {
       goBack = false;
       Toast.makeText(getActivity(), "Title Cannot be empty", Toast.LENGTH_SHORT).show();
     }
+    else if(mBtnDate.getText().toString()=="Date") {
+      goBack = false;
+      Toast.makeText(getActivity(), "Date is not selected", Toast.LENGTH_SHORT).show();
+    }
+    else if(mBtnStart.getText().toString()=="Start Time") {
+      goBack = false;
+      Toast.makeText(getActivity(), "Start time is not selected", Toast.LENGTH_SHORT).show();
+    }
+    else if(mBtnEnd.getText().toString()=="End Time") {
+      goBack = false;
+      Toast.makeText(getActivity(), "End time is not selected", Toast.LENGTH_SHORT).show();
+    }
     else {
       mEntry.setTitle(mTitle.getText().toString());
       mEntry.setDate(mBtnDate.getText().toString());
@@ -124,7 +142,14 @@ public class EntryDetailsFragment extends Fragment {
       mEntryDetailsViewModel.saveEntry(mEntry);
     }
     if(goBack) {
-      getActivity().onBackPressed();
+      if(!newEntry) {
+        mEntryDetailsViewModel.saveEntry(mEntry);
+        getActivity().onBackPressed();
+      }
+      else {
+        mEntryDetailsViewModel.insert(mEntry);
+        getActivity().onBackPressed();
+      }
     }
   }
 

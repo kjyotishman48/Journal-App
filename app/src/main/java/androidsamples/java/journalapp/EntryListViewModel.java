@@ -16,6 +16,8 @@ public class EntryListViewModel extends ViewModel {
         mRepository.insert(entry);
     }
 
+    public void delete(JournalEntry entry) { mRepository.delete(entry);}
+    
     public LiveData<List<JournalEntry>> getAllEntries() {
         return mRepository.getAllEntries();
     }
