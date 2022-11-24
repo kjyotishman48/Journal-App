@@ -212,6 +212,17 @@ public class EntryDetailsFragment extends Fragment {
               })
               .setNegativeButton(R.string.cancel, null).show();
     }
+    else if (item.getItemId() == R.id.menu_share_entry) {
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      String message = "Look what I have been up to: "+ mEntry.title() + " on " +
+              mEntry.date() + ", " + mEntry.getStartTime() + " to " + mEntry.getEndTime();
+      sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+      sendIntent.setType("text/plain");
+
+      Intent shareIntent = Intent.createChooser(sendIntent, null);
+      startActivity(shareIntent);
+    }
     return super.onOptionsItemSelected(item);
   }
 
