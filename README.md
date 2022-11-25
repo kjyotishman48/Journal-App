@@ -60,7 +60,7 @@ In the entryListFragment class inside the inside onCreateView() have used setHas
 
 Inside the same class overriden the onCreateOptionsMenu() to inflate the layout
 
-Then inside the onOptionsItemSelected() method we checking if the id of the item selected is menu_info_entry. If the id matches, we are using action actionEntryListFragmentToInfoFragment to navigate from the EntryListFragment to the EntryDetailsFragment
+Then inside the onOptionsItemSelected() method we checking if the id of the item selected is menu_info_entry. If the id matches, we are using action actionEntryListFragmentToInfoFragment to navigate from the EntryListFragment to the InfoFragment
 
 ### Task 6  Acessibility 
 
