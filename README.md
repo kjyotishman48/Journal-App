@@ -16,7 +16,7 @@ In the EntryListFragment which consists of recyler view and a floating action bu
 
 ### Known Bugs
 
-- If the journal duration spans between multiple days it will show show the start time and end time of different dates.
+- If the journal duration cannot spans between multiple days, it will show show the start time and end time for the same date only.
 - End time can be before start time.
 
 
