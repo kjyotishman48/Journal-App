@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:background="@color/design_default_color_secondary"
+    android:background="@color/light_purple"
     android:orientation="vertical">
 
   <TextView
@@ -12,6 +12,7 @@
       android:layout_height="wrap_content"
       android:padding="2dp"
       android:text="@string/title_label"
+      android:textColor="@color/black"
       android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
   <LinearLayout
@@ -26,6 +27,7 @@
         android:layout_weight="0.6"
         android:padding="2dp"
         android:text="@string/date"
+        android:textColor="@color/black"
         android:textAllCaps="true"
         android:textStyle="italic" />
 
@@ -35,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
         android:text="@string/start_time"
+        android:textColor="@color/black"
         android:textStyle="italic" />
 
     <TextView
@@ -43,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.2"
         android:text="@string/end_time"
+        android:textColor="@color/black"
         android:textStyle="italic" />
   </LinearLayout>
 </LinearLayout>

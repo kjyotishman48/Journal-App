@@ -13,8 +13,10 @@
   <string name="cancel">Cancel</string>
   <string name="share">Share</string>
   <string name="info">Info</string>
-  <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="info_fragment_txt">Journal App Info:-\n\nThis app allows users to record their day to day activities. It uses the Room database and Architecture components</string>
   <string name="journal_app_info">Journal App Info</string>
+  <string name="nav_comp_label">This is the navigation component</string>
+  <string name="menu_info_entry">menu_info_entry</string>
+  <string name="this_is_the_recyler_view">This is the recyler view</string>
 </resources>

@@ -4,6 +4,8 @@
     <item
         android:id="@+id/menu_info_entry"
         android:title="@string/info"
+        android:contentDescription="@string/menu_info_entry"
         android:icon="@android:drawable/ic_menu_info_details"
-        app:showAsAction="ifRoom|withText" />
+        app:showAsAction="ifRoom|withText"
+        />
 </menu>

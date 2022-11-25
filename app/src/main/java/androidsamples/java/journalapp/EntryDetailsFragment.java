@@ -86,9 +86,7 @@ public class EntryDetailsFragment extends Fragment {
     mBtnStart = view.findViewById(R.id.btn_start_time);
     mBtnEnd = view.findViewById(R.id.btn_end_time);
     view.findViewById(R.id.btn_save).setOnClickListener(this::saveEntry);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       view.findViewById(R.id.btn_entry_date).setOnClickListener(this::launchDateDialog);
-    }
     view.findViewById(R.id.btn_start_time).setOnClickListener(this::launchStartTimerDialog);
     view.findViewById(R.id.btn_end_time).setOnClickListener(this::launchEndTimerDialog);
     return view;
@@ -122,15 +120,15 @@ public class EntryDetailsFragment extends Fragment {
       goBack = false;
       Toast.makeText(getActivity(), "Title Cannot be empty", Toast.LENGTH_SHORT).show();
     }
-    else if(mBtnDate.getText().toString()=="Date") {
+    else if(mBtnDate.getText().toString().equals("Date")) {
       goBack = false;
       Toast.makeText(getActivity(), "Date is not selected", Toast.LENGTH_SHORT).show();
     }
-    else if(mBtnStart.getText().toString()=="Start Time") {
+    else if(mBtnStart.getText().toString().equals("Start Time")) {
       goBack = false;
       Toast.makeText(getActivity(), "Start time is not selected", Toast.LENGTH_SHORT).show();
     }
-    else if(mBtnEnd.getText().toString()=="End Time") {
+    else if(mBtnEnd.getText().toString().equals("End Time")) {
       goBack = false;
       Toast.makeText(getActivity(), "End time is not selected", Toast.LENGTH_SHORT).show();
     }
@@ -153,7 +151,6 @@ public class EntryDetailsFragment extends Fragment {
     }
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.N)
   private void launchDateDialog(View view) {
     final Calendar c = Calendar.getInstance();
     int year = c.get(Calendar.YEAR);
@@ -227,26 +224,36 @@ public class EntryDetailsFragment extends Fragment {
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     if (item.getItemId() == R.id.menu_delete_entry) {
-      new AlertDialog.Builder(getContext())
-              .setTitle("Delete Entry")
-              .setMessage("Do you really want to delete this entry?")
-              .setIcon(android.R.drawable.ic_delete)
-              .setPositiveButton(R.string.yes, (dialog, id) -> {
-                mEntryDetailsViewModel.deleteEntry(mEntry);
-                getActivity().onBackPressed();
-              })
-              .setNegativeButton(R.string.cancel, null).show();
+      if(!newEntry) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete Entry")
+                .setMessage("Do you really want to delete this entry?")
+                .setIcon(android.R.drawable.ic_delete)
+                .setPositiveButton(R.string.yes, (dialog, id) -> {
+                  mEntryDetailsViewModel.deleteEntry(mEntry);
+                  getActivity().onBackPressed();
+                })
+                .setNegativeButton(R.string.cancel, null).show();
+      }
+      else {
+        Toast.makeText(getContext(), "Cannot delete an unsaved entry", Toast.LENGTH_LONG).show();
+      }
     }
     else if (item.getItemId() == R.id.menu_share_entry) {
-      Intent sendIntent = new Intent();
-      sendIntent.setAction(Intent.ACTION_SEND);
-      String message = "Look what I have been up to: "+ mEntry.title() + " on " +
-              mEntry.date() + ", " + mEntry.getStartTime() + " to " + mEntry.getEndTime();
-      sendIntent.putExtra(Intent.EXTRA_TEXT, message);
-      sendIntent.setType("text/plain");
+      if(!newEntry) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        String message = "Look what I have been up to: " + mEntry.title() + " on " +
+                mEntry.date() + ", " + mEntry.getStartTime() + " to " + mEntry.getEndTime();
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
 
-      Intent shareIntent = Intent.createChooser(sendIntent, null);
-      startActivity(shareIntent);
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+      }
+      else {
+        Toast.makeText(getContext(), "Cannot share an unsaved entry", Toast.LENGTH_LONG).show();
+      }
     }
     return super.onOptionsItemSelected(item);
   }

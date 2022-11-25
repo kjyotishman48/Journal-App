@@ -57,8 +57,6 @@ public class EntryListFragment extends Fragment {
     //---------------------------------------------------------------------------------------------------
     // SAFE ARGS
     view.findViewById(R.id.btn_add_entry).setOnClickListener((viewArg) -> {
-      //JournalEntry entry = new JournalEntry("", "", "","");
-      //mEntryListViewModel.insert(entry);
       EntryListFragmentDirections.AddEntryAction action = EntryListFragmentDirections.addEntryAction();
       action.setEntryId("NEW_ENTRY");
       Navigation.findNavController(view).navigate(action);

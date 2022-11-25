@@ -8,7 +8,7 @@ android {
 
   defaultConfig {
     applicationId "androidsamples.java.journalapp"
-    minSdk 21
+    minSdk 24
     targetSdk 32
     versionCode 1
     versionName "1.0"
@@ -41,11 +41,14 @@ dependencies {
   implementation 'androidx.recyclerview:recyclerview:1.2.1'
   implementation 'androidx.preference:preference:1.2.0'
   implementation 'androidx.room:room-runtime:2.4.3'
+  implementation 'androidx.test.espresso:espresso-contrib:3.5.0'
   annotationProcessor 'androidx.room:room-compiler:2.4.3'
   debugImplementation 'androidx.fragment:fragment-testing:1.5.4'
   testImplementation 'junit:junit:4.13.2'
   androidTestImplementation 'androidx.test.ext:junit:1.1.4'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.5.0-alpha01'
+
   // upgrading fails fragment espresso tests?
 
   def nav_version = "2.5.3"
